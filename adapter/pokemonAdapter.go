@@ -12,8 +12,8 @@ type Pokemon struct {
 }
 
 func GetRandomPokemon() Pokemon {
-	pokemonResponse := GetPokemonResponse(getRandomInt())
-	speciesResponse := GetSpeciesResponse(pokemonResponse)
+	pokemonResponse, _ := GetPokemonResponse(getRandomInt())
+	speciesResponse, _ := GetSpeciesResponse(pokemonResponse)
 	name := GetGermanName(speciesResponse)
 	fmt.Println(speciesResponse)
 	return Pokemon{

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 )
 
@@ -33,12 +34,17 @@ type OfficialArtwork struct {
 	FrontDefault string `json:"front_default"`
 }
 
-func GetPokemonResponse(number int) PokemonResponse {
-	response, _ := http.Get(fmt.Sprintf("https://pokeapi.co/api/v2/pokemon/%d/", number))
-	responseData, _ := io.ReadAll(response.Body)
+func GetPokemonResponse(number int) (PokemonResponse, error) {
+	response, err := http.Get(fmt.Sprintf("https://pokeapi.co/api/v2/pokemon/%d/", number))
+	if err != nil {
+		slog.Warn("error retrieving pokemon: " + err.Error())
+		var empty PokemonResponse
+		return empty, err
+	}
 	defer response.Body.Close()
+	responseData, _ := io.ReadAll(response.Body)
 
 	var responseObject PokemonResponse
 	json.Unmarshal(responseData, &responseObject)
-	return responseObject
+	return responseObject, nil
 }
