@@ -19,3 +19,22 @@
 
 # Go workspace file
 go.work
+
+bin
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.iml
+/.vscode/
+/mock-service/package-lock.json
+/webapp.tar
+/config.json
+/version
+/lib/
