@@ -6,9 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../static/styles.css">
-    <title>Go-Live-Tracker</title>
+    <title>Go-Pokemon</title>
 </head>
-<body class="h-screen flex items-center justify-center">
-    <h1 class="font-bold">Hello World!</h1>
+<body class="mt-10 p-4 flex flex-wrap justify-center">
+
+<div class="flex-col">
+    <img src="{{ .Image }}">
+    <div class="flex flex-wrap justify-center text-6xl">
+        <h1 class="font-bold">#{{ .Id }} - {{ .Name }}</h1>
+    </div>
+</div>
 </body>
 </html>

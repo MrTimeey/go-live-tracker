@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-
+	"github.com/MrTimeey/go-live-tracker/adapter"
 	"html/template"
 	"log"
 	"net/http"
@@ -11,8 +11,7 @@ import (
 func main() {
 	templateFunction := func(w http.ResponseWriter, r *http.Request) {
 		tmpl := template.Must(template.ParseFiles("./templates/index.html"))
-		fmt.Println(GetData())
-		tmpl.Execute(w, nil)
+		tmpl.Execute(w, adapter.GetRandomPokemon())
 	}
 
 	fs := http.FileServer(http.Dir("static"))
