@@ -2,15 +2,17 @@ package main
 
 import (
 	"fmt"
-	"github.com/MrTimeey/go-live-tracker/adapter"
 	"html/template"
 	"log"
 	"net/http"
+
+	"github.com/MrTimeey/go-live-tracker/adapter"
 )
+
+var tmpl = template.Must(template.ParseFiles("./templates/index.html"))
 
 func main() {
 	templateFunction := func(w http.ResponseWriter, r *http.Request) {
-		tmpl := template.Must(template.ParseFiles("./templates/index.html"))
 		tmpl.Execute(w, adapter.GetRandomPokemon())
 	}
 

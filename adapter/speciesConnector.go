@@ -2,7 +2,8 @@ package adapter
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
+	"log/slog"
 	"net/http"
 )
 
@@ -21,12 +22,19 @@ type LanguageStruct struct {
 	Url  string `json:"url"`
 }
 
-func GetSpeciesResponse(pokemonResponse PokemonResponse) SpeciesResponse {
-	response, _ := http.Get(pokemonResponse.Species.Url)
-	responseData, _ := ioutil.ReadAll(response.Body)
+func GetSpeciesResponse(pokemonResponse PokemonResponse) (SpeciesResponse, error) {
+	response, err := http.Get(pokemonResponse.Species.Url)
+	if err != nil {
+		slog.Warn("error retrieving species: " + err.Error())
+		var empty SpeciesResponse
+		return empty, err
+	}
+	defer response.Body.Close()
+
+	responseData, _ := io.ReadAll(response.Body)
 	var responseObject SpeciesResponse
 	json.Unmarshal(responseData, &responseObject)
-	return responseObject
+	return responseObject, nil
 }
 
 func GetGermanName(response SpeciesResponse) string {
