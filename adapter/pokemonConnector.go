@@ -3,7 +3,7 @@ package adapter
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -35,7 +35,9 @@ type OfficialArtwork struct {
 
 func GetPokemonResponse(number int) PokemonResponse {
 	response, _ := http.Get(fmt.Sprintf("https://pokeapi.co/api/v2/pokemon/%d/", number))
-	responseData, _ := ioutil.ReadAll(response.Body)
+	responseData, _ := io.ReadAll(response.Body)
+	defer response.Body.Close()
+
 	var responseObject PokemonResponse
 	json.Unmarshal(responseData, &responseObject)
 	return responseObject

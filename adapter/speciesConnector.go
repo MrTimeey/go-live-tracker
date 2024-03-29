@@ -2,7 +2,7 @@ package adapter
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -23,7 +23,9 @@ type LanguageStruct struct {
 
 func GetSpeciesResponse(pokemonResponse PokemonResponse) SpeciesResponse {
 	response, _ := http.Get(pokemonResponse.Species.Url)
-	responseData, _ := ioutil.ReadAll(response.Body)
+	responseData, _ := io.ReadAll(response.Body)
+	defer response.Body.Close()
+
 	var responseObject SpeciesResponse
 	json.Unmarshal(responseData, &responseObject)
 	return responseObject
